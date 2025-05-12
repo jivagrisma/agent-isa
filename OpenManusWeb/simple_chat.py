@@ -34,7 +34,7 @@ from app.llm import LLM
 from app.config import config
 
 # Crear la aplicación FastAPI
-app = FastAPI(title="OpenManusWeb Simple Chat")
+app = FastAPI(title="ISA-Agent Chat")
 
 # Crear directorio para templates si no existe
 templates_dir = Path(__file__).parent / "templates"
@@ -67,7 +67,7 @@ chat_html = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenManusWeb Chat</title>
+    <title>ISA-Agent</title>
     <style>
         :root {
             --primary-color: #4a6fa5;
@@ -229,7 +229,7 @@ chat_html = """
 </head>
 <body>
     <header>
-        <h1>OpenManusWeb Chat</h1>
+        <h1>ISA-Agent</h1>
     </header>
     <div class="container">
         <div class="chat-container">
@@ -365,7 +365,7 @@ async def websocket_endpoint(websocket: WebSocket, session_id: str):
         # Enviar mensaje de bienvenida
         await websocket.send_json({
             "type": "message",
-            "content": "¡Hola! Soy el asistente de OpenManusWeb. ¿En qué puedo ayudarte hoy?"
+            "content": "¡Hola! Soy el asistente ISA. ¿En qué puedo ayudarte hoy?"
         })
 
         while True:
@@ -517,13 +517,13 @@ def main():
     """
     # Obtener puerto de los argumentos de línea de comandos
     import argparse
-    parser = argparse.ArgumentParser(description="OpenManusWeb Simple Chat")
+    parser = argparse.ArgumentParser(description="ISA-Agent Chat")
     parser.add_argument("--port", type=int, default=8005, help="Puerto para la aplicación web")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host para la aplicación web")
     args = parser.parse_args()
 
     # Iniciar la aplicación
-    print(f"🚀 OpenManusWeb Simple Chat iniciando en http://{args.host}:{args.port}")
+    print(f"🚀 ISA-Agent Chat iniciando en http://{args.host}:{args.port}")
     uvicorn.run(app, host=args.host, port=args.port)
 
 if __name__ == "__main__":
