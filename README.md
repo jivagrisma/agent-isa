@@ -33,7 +33,7 @@ OpenManusWeb/
 - Python 3.12 o superior
 - Cuenta de AWS con acceso a AWS Bedrock
 - Credenciales de AWS (Access Key ID y Secret Access Key)
-- Acceso a los modelos de AWS Bedrock (Amazon Nova Pro, Claude 3 Sonnet, etc.)
+- Acceso a los modelos de AWS Bedrock (Amazon Nova Pro, Amazon Nova Lite, Claude 3.7 Sonnet, etc.)
 
 ## Instalación
 
