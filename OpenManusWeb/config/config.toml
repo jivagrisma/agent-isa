@@ -1,0 +1,48 @@
+# Global LLM configuration
+[llm]
+api_type = 'bedrock'
+model = "Amazon Nova Pro"
+model_id = "amazon.nova-pro-v1:0"
+region = "us-east-1"
+aws_access_key_id = "AKIAVEVH363UV2RE3PES"
+aws_secret_access_key = "zZ6t/LupesTqpndKWwwCK+eGLvw1cOx/XmT2knxv"
+max_tokens = 4096
+temperature = 0.0
+base_url = "https://bedrock-runtime.us-east-1.amazonaws.com"
+api_key = "dummy-key-for-bedrock"
+api_version = ""
+
+# [llm] #AZURE OPENAI:
+# api_type= 'azure'
+# model = "YOUR_MODEL_NAME" #"gpt-4o-mini"
+# base_url = "{YOUR_AZURE_ENDPOINT.rstrip('/')}/openai/deployments/{AZURE_DEPOLYMENT_ID}"
+# api_key = "AZURE API KEY"
+# max_tokens = 8096
+# temperature = 0.0
+# api_version="AZURE API VERSION" #"2024-08-01-preview"
+
+# [llm] #AWS BEDROCK:
+# api_type = 'bedrock'
+# model = "Claude 3.7 Sonnet"
+# model_id = "anthropic.claude-3-7-sonnet-20250219-v1:0"
+# region = "us-east-1"
+# aws_access_key_id = "AKIAVEVH363UV2RE3PES"
+# aws_secret_access_key = "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"
+# max_tokens = 4096
+# temperature = 0.0
+
+# [llm] #AWS BEDROCK (Amazon Nova):
+# api_type = 'bedrock'
+# model = "Amazon Nova Pro"
+# model_id = "amazon.nova-pro-v1:0"
+# region = "us-east-1"
+# aws_access_key_id = "AKIAVEVH363UV2RE3PES"
+# aws_secret_access_key = "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"
+# max_tokens = 4096
+# temperature = 0.0
+
+# Optional configuration for specific LLM models
+[llm.vision]
+model = "claude-3-5-sonnet"
+base_url = "https://api.openai.com/v1"
+api_key = "sk-..."
