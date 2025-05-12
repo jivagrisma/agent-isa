@@ -1,6 +1,6 @@
-# OpenManusWeb con Integración AWS Bedrock
+# Agent-ISA con Integración AWS Bedrock
 
-Este repositorio contiene una implementación de OpenManusWeb con integración a AWS Bedrock, permitiendo utilizar modelos de lenguaje avanzados como Amazon Nova Pro y Claude 3 Sonnet.
+Este repositorio contiene una implementación de Agent-ISA, un proyecto basado en la bifurcación de OpenManusWeb, con integración a AWS Bedrock, permitiendo utilizar modelos de lenguaje avanzados como Amazon Nova Pro, Amazon Nova Lite y Claude 3.7 Sonnet.
 
 ## Características
 
