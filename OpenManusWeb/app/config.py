@@ -1,9 +1,14 @@
 import threading
 import tomllib
+import os
 from pathlib import Path
 from typing import Dict
 
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
 
 
 def get_project_root() -> Path:
@@ -78,6 +83,19 @@ class Config:
             k: v for k, v in raw_config.get("llm", {}).items() if isinstance(v, dict)
         }
 
+        # Cargar credenciales de AWS desde variables de entorno
+        aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID", "")
+        aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
+        aws_region = os.environ.get("AWS_REGION", "us-east-1")
+
+        # Cargar IDs de modelos desde variables de entorno
+        model_id_map = {
+            "default": os.environ.get("BEDROCK_MODEL_NOVA_PRO", "amazon.nova-pro-v1:0"),
+            "nova_pro": os.environ.get("BEDROCK_MODEL_NOVA_PRO", "amazon.nova-pro-v1:0"),
+            "nova_lite": os.environ.get("BEDROCK_MODEL_NOVA_LITE", "amazon.nova-lite-v1:0"),
+            "claude": os.environ.get("BEDROCK_MODEL_CLAUDE", "anthropic.claude-3-5-sonnet-20240620-v1:0")
+        }
+
         default_settings = {
             "model": base_llm.get("model"),
             "base_url": base_llm.get("base_url"),
@@ -87,20 +105,31 @@ class Config:
             "api_type": base_llm.get("api_type", ""),
             "api_version": base_llm.get("api_version", ""),
             # AWS Bedrock specific fields
-            "region": base_llm.get("region", ""),
-            "aws_access_key_id": base_llm.get("aws_access_key_id", ""),
-            "aws_secret_access_key": base_llm.get("aws_secret_access_key", ""),
+            "region": aws_region or base_llm.get("region", ""),
+            "aws_access_key_id": aws_access_key_id or base_llm.get("aws_access_key_id", ""),
+            "aws_secret_access_key": aws_secret_access_key or base_llm.get("aws_secret_access_key", ""),
             "model_id": base_llm.get("model_id", ""),
         }
 
+        # Crear configuración para cada modelo con sus IDs específicos
+        llm_configs = {}
+
+        # Configuración por defecto
+        llm_configs["default"] = default_settings
+
+        # Configuraciones específicas para cada modelo
+        for name, override_config in llm_overrides.items():
+            # Combinar configuración por defecto con la específica
+            model_config = {**default_settings, **override_config}
+
+            # Actualizar model_id desde variables de entorno si está disponible
+            if name in model_id_map:
+                model_config["model_id"] = model_id_map[name]
+
+            llm_configs[name] = model_config
+
         config_dict = {
-            "llm": {
-                "default": default_settings,
-                **{
-                    name: {**default_settings, **override_config}
-                    for name, override_config in llm_overrides.items()
-                },
-            }
+            "llm": llm_configs
         }
 
         self._config = AppConfig(**config_dict)

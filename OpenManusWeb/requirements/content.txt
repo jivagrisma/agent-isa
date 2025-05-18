@@ -1,0 +1,18 @@
+# Requisitos para el módulo de procesamiento de contenido
+
+# Dependencias básicas
+beautifulsoup4>=4.12.0
+requests>=2.28.0
+lxml>=4.9.0
+html2text>=2020.1.16
+markdown>=3.4.0
+
+# Procesamiento de texto
+nltk>=3.8.0
+textblob>=0.17.0
+
+# Procesamiento de imágenes
+Pillow>=9.5.0
+
+# AWS
+boto3>=1.28.0

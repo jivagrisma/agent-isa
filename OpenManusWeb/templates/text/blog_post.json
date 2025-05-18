@@ -1,0 +1,28 @@
+{
+  "name": "blog_post",
+  "description": "Plantilla para generar un artículo de blog",
+  "prompt": "Escribe un artículo de blog sobre {topic}. El artículo debe tener una introducción atractiva, varios subtítulos con contenido relevante, y una conclusión. Incluye datos interesantes y ejemplos prácticos.",
+  "default_style": "informal",
+  "default_format": "markdown",
+  "temperature": 0.7,
+  "variables": [
+    {
+      "name": "topic",
+      "description": "Tema del artículo",
+      "required": true
+    },
+    {
+      "name": "audience",
+      "description": "Audiencia objetivo",
+      "required": false,
+      "default": "general"
+    },
+    {
+      "name": "word_count",
+      "description": "Número aproximado de palabras",
+      "required": false,
+      "default": 800
+    }
+  ],
+  "example_output": "# Título del Artículo\n\n## Introducción\n\nTexto de introducción...\n\n## Primer Subtítulo\n\nContenido...\n\n## Segundo Subtítulo\n\nContenido...\n\n## Conclusión\n\nTexto de conclusión..."
+}

@@ -26,6 +26,8 @@ wheels/
 
 # Environments
 .env
+.env.*
+!.env.example
 .venv
 env/
 venv/
@@ -38,3 +40,37 @@ venv.bak/
 .vscode/
 *.swp
 *.swo
+
+# Archivos de credenciales
+credentials.json
+credentials.yaml
+credentials.yml
+credentials.toml
+aws_credentials.json
+aws_config.json
+*.pem
+*.key
+*.crt
+
+# Archivos de logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archivos de datos y uploads
+*.db
+*.sqlite
+*.sqlite3
+uploads/*
+!uploads/.gitkeep
+OpenManusWeb/uploads/*
+!OpenManusWeb/uploads/.gitkeep

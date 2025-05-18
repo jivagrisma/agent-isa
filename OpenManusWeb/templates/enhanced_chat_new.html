@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISA-Agent - Chat Mejorado</title>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Highlight.js para resaltado de código -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css" id="code-theme-light">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css" id="code-theme-dark" disabled>
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/static/css/style.css?v=1.2">
+    <link rel="stylesheet" href="/static/css/enhanced_new_v2.css?v=1.2">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Barra lateral minimalista -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <i class="ri-cloud-line cloud-logo"></i>
+                </div>
+            </div>
+            <div class="sidebar-content">
+                <!-- Navegación principal -->
+                <div class="sidebar-nav">
+                    <button class="nav-button active" title="Nuevo chat">
+                        <i class="ri-add-line"></i>
+                    </button>
+                    <button class="nav-button" title="Historial">
+                        <i class="ri-history-line"></i>
+                    </button>
+                </div>
+
+                <!-- Información de versión -->
+                <div class="sidebar-footer">
+                    <div class="sidebar-version">
+                        Tecnología de Giroplay S.A.S
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <button id="toggle-sidebar-btn" class="icon-button" title="Mostrar/ocultar barra lateral">
+                        <i class="ri-menu-line"></i>
+                    </button>
+                </div>
+                <div class="header-actions">
+                    <button id="theme-toggle-btn" class="icon-button" title="Cambiar tema">
+                        <i class="ri-sun-line" id="light-icon"></i>
+                        <i class="ri-moon-line" id="dark-icon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- El mensaje de bienvenida se añadirá dinámicamente desde el JavaScript -->
+                </div>
+
+                <div class="status-container">
+                    <div class="status" id="status"></div>
+                    <div class="typing-indicator" id="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <form class="message-form" id="message-form">
+                    <div class="message-input-container">
+                        <button type="button" id="reasoning-mode-btn" class="mode-button reasoning active" title="Razonamiento">
+                            <i class="ri-brain-line"></i>
+                            <span>Razonamiento</span>
+                        </button>
+                        <button type="button" id="search-mode-btn" class="mode-button search" title="Búsqueda">
+                            <i class="ri-search-line"></i>
+                            <span>Búsqueda</span>
+                        </button>
+
+                        <textarea
+                            class="message-input"
+                            id="message-input"
+                            placeholder="Escribe tu mensaje aquí..."
+                            rows="1"
+                            autofocus
+                        ></textarea>
+
+                        <button type="button" id="upload-button" class="action-button" title="Subir archivo">
+                            <i class="ri-attachment-2"></i>
+                        </button>
+                        <button type="submit" class="send-button" id="send-button">
+                            <i class="ri-send-plane-fill"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts para Markdown y resaltado de código -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <!-- Scripts personalizados -->
+    <script src="/static/js/main.js?v=1.2"></script>
+    <script src="/static/js/enhanced_chat.js?v=1.2"></script>
+
+    <!-- Inicialización -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializar chat mejorado
+            const chat = new EnhancedChat();
+
+            // Botón para mostrar/ocultar barra lateral en móvil
+            const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+            const appContainer = document.querySelector('.app-container');
+
+            if (toggleSidebarBtn) {
+                toggleSidebarBtn.addEventListener('click', () => {
+                    appContainer.classList.toggle('sidebar-visible');
+                });
+            }
+
+            // En móvil, ocultar barra lateral por defecto
+            if (window.innerWidth <= 768) {
+                appContainer.classList.remove('sidebar-visible');
+            } else {
+                appContainer.classList.add('sidebar-visible');
+            }
+
+            // Botón de subir archivo
+            const uploadButton = document.getElementById('upload-button');
+            if (uploadButton) {
+                uploadButton.addEventListener('click', () => {
+                    if (chat && typeof chat._handleFileUpload === 'function') {
+                        chat._handleFileUpload();
+                    } else {
+                        alert('La funcionalidad de subir archivos estará disponible próximamente.');
+                    }
+                });
+            }
+
+            // Configuración de los botones de modo
+            const reasoningModeBtn = document.getElementById('reasoning-mode-btn');
+            const searchModeBtn = document.getElementById('search-mode-btn');
+
+            // Botón de razonamiento (selecciona automáticamente Claude 3.7 Sonnet)
+            if (reasoningModeBtn) {
+                reasoningModeBtn.addEventListener('click', () => {
+                    // Seleccionar automáticamente Claude 3.7 Sonnet
+                    const modelConfig = {
+                        model: 'anthropic.claude-3-sonnet-20240229-v1:0',
+                        temperature: 0.7
+                    };
+
+                    // Guardar configuración directamente sin mostrar modal
+                    localStorage.setItem('preferred_model', modelConfig.model);
+                    localStorage.setItem('preferred_temperature', modelConfig.temperature);
+
+                    // Activar el botón de razonamiento y desactivar el de búsqueda
+                    reasoningModeBtn.classList.add('active');
+                    if (searchModeBtn) {
+                        searchModeBtn.classList.remove('active');
+                    }
+                });
+            }
+
+            // Botón de búsqueda
+            if (searchModeBtn) {
+                searchModeBtn.addEventListener('click', () => {
+                    // Activar el botón de búsqueda y desactivar el de razonamiento
+                    searchModeBtn.classList.add('active');
+                    if (reasoningModeBtn) {
+                        reasoningModeBtn.classList.remove('active');
+                    }
+                });
+            }
+
+            // Función para mostrar modal de configuración
+            function showModelConfigModal(config) {
+                // Crear modal
+                const modal = document.createElement('div');
+                modal.className = 'model-config-modal';
+
+                // Contenido del modal
+                modal.innerHTML = `
+                    <div class="model-config-content">
+                        <h3>Configuración de Razonamiento</h3>
+                        <div class="model-config-option">
+                            <label for="modal-model-select">Modelo:</label>
+                            <select id="modal-model-select" class="model-select">
+                                <option value="anthropic.claude-3-sonnet-20240229-v1:0">Claude 3.7 Sonnet</option>
+                                <option value="amazon.nova-lite-v1">Amazon Nova Lite</option>
+                                <option value="amazon.nova-pro-v1">Amazon Nova Pro</option>
+                            </select>
+                        </div>
+                        <div class="model-config-option">
+                            <label for="modal-temperature">Temperatura: <span id="modal-temp-value">${config.temperature}</span></label>
+                            <input type="range" id="modal-temperature" min="0" max="1" step="0.1" value="${config.temperature}">
+                        </div>
+                        <div class="model-config-actions">
+                            <button id="modal-cancel" class="modal-button">Cancelar</button>
+                            <button id="modal-save" class="modal-button primary">Guardar</button>
+                        </div>
+                    </div>
+                `;
+
+                // Añadir modal al DOM
+                document.body.appendChild(modal);
+
+                // Seleccionar el modelo actual
+                const modelSelect = document.getElementById('modal-model-select');
+                modelSelect.value = config.model;
+
+                // Actualizar valor de temperatura al mover el slider
+                const tempSlider = document.getElementById('modal-temperature');
+                const tempValue = document.getElementById('modal-temp-value');
+                tempSlider.addEventListener('input', () => {
+                    tempValue.textContent = tempSlider.value;
+                });
+
+                // Botón cancelar
+                document.getElementById('modal-cancel').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+
+                // Botón guardar
+                document.getElementById('modal-save').addEventListener('click', () => {
+                    // Guardar configuración
+                    localStorage.setItem('preferred_model', modelSelect.value);
+                    localStorage.setItem('preferred_temperature', tempSlider.value);
+
+                    // Cerrar modal
+                    document.body.removeChild(modal);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

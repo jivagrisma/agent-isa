@@ -1,0 +1,33 @@
+{
+  "name": "technical_documentation",
+  "description": "Plantilla para generar documentación técnica",
+  "prompt": "Escribe documentación técnica para {component_name}. La documentación debe incluir una descripción general, requisitos, instalación, configuración, uso, API (si aplica), ejemplos y solución de problemas. Información técnica: {technical_details}.",
+  "default_style": "técnico",
+  "default_format": "markdown",
+  "temperature": 0.3,
+  "variables": [
+    {
+      "name": "component_name",
+      "description": "Nombre del componente o sistema",
+      "required": true
+    },
+    {
+      "name": "technical_details",
+      "description": "Detalles técnicos del componente",
+      "required": true
+    },
+    {
+      "name": "version",
+      "description": "Versión del componente",
+      "required": false,
+      "default": "1.0.0"
+    },
+    {
+      "name": "platform",
+      "description": "Plataforma o entorno",
+      "required": false,
+      "default": "Multiplataforma"
+    }
+  ],
+  "example_output": "# Documentación Técnica: [Nombre del Componente]\n\n## Descripción General\n\nDescripción técnica...\n\n## Requisitos\n\n- Requisito 1\n- Requisito 2\n\n## Instalación\n\n```bash\ncomando de instalación\n```\n\n## Configuración\n\nInstrucciones de configuración...\n\n## Uso\n\nEjemplos de uso...\n\n## API\n\nDocumentación de API...\n\n## Solución de Problemas\n\nProblemas comunes y soluciones..."
+}

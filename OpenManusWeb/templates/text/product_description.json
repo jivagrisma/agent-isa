@@ -1,0 +1,32 @@
+{
+  "name": "product_description",
+  "description": "Plantilla para generar una descripción de producto",
+  "prompt": "Escribe una descripción atractiva y persuasiva para {product_name}. La descripción debe destacar las características principales, beneficios y casos de uso. El producto tiene las siguientes características: {features}.",
+  "default_style": "persuasivo",
+  "default_format": "markdown",
+  "temperature": 0.6,
+  "variables": [
+    {
+      "name": "product_name",
+      "description": "Nombre del producto",
+      "required": true
+    },
+    {
+      "name": "features",
+      "description": "Características del producto",
+      "required": true
+    },
+    {
+      "name": "target_audience",
+      "description": "Audiencia objetivo",
+      "required": false,
+      "default": "consumidores generales"
+    },
+    {
+      "name": "price",
+      "description": "Precio del producto",
+      "required": false
+    }
+  ],
+  "example_output": "# [Nombre del Producto]\n\n## Descripción\n\nTexto descriptivo persuasivo...\n\n## Características Principales\n\n- Característica 1: Descripción\n- Característica 2: Descripción\n\n## Beneficios\n\n- Beneficio 1\n- Beneficio 2\n\n## Ideal Para\n\n- Caso de uso 1\n- Caso de uso 2"
+}

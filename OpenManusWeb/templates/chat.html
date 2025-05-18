@@ -5,18 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISA-Agent</title>
-    
+
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
+
     <!-- Iconos -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    
+
     <!-- Highlight.js para resaltado de código -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css" id="code-theme-light">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css" id="code-theme-dark" disabled>
-    
+
     <!-- CSS personalizado -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -32,7 +32,7 @@
                 <p class="sidebar-note">Próximamente: historial y configuración</p>
             </div>
         </aside>
-        
+
         <!-- Contenido principal -->
         <main class="main-content">
             <header class="main-header">
@@ -49,25 +49,25 @@
                     </button>
                 </div>
             </header>
-            
+
             <div class="chat-container">
                 <div class="chat-messages" id="chat-messages">
                     <!-- Los mensajes se agregarán dinámicamente aquí -->
                 </div>
-                
+
                 <div class="status-container">
                     <div class="status" id="status"></div>
                     <div class="typing-indicator" id="typing-indicator">
                         <span></span><span></span><span></span>
                     </div>
                 </div>
-                
+
                 <form class="message-form" id="message-form">
                     <div class="message-input-container">
-                        <textarea 
-                            class="message-input" 
-                            id="message-input" 
-                            placeholder="Escribe tu mensaje aquí..." 
+                        <textarea
+                            class="message-input"
+                            id="message-input"
+                            placeholder="Escribe tu mensaje aquí..."
                             rows="1"
                             autofocus
                         ></textarea>
@@ -83,7 +83,7 @@
     <!-- Scripts para Markdown y resaltado de código -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    
+
     <!-- Script principal -->
     <script src="/static/js/main.js"></script>
 </body>

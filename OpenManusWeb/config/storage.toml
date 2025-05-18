@@ -1,0 +1,43 @@
+# Configuración del módulo de Almacenamiento
+
+[general]
+enabled = true
+
+[local]
+root_directory = "storage"
+create_if_missing = true
+permissions = 0o755
+
+[aws]
+region = "us-east-1"
+use_s3 = false
+s3_bucket = ""
+s3_prefix = "agent-isa"
+
+[structured]
+default_format = "json"
+db_directory = "databases"
+enable_indexing = true
+auto_backup = true
+backup_interval = 86400  # 24 horas
+
+[cache]
+directory = "cache"
+memory_limit = 104857600  # 100 MB
+disk_limit = 1073741824  # 1 GB
+default_ttl = 3600  # 1 hora
+cleanup_interval = 300  # 5 minutos
+compression_threshold = 1024  # 1 KB
+compression_level = 6  # Nivel de compresión (0-9)
+
+[sync]
+enable_sync = false
+sync_interval = 3600  # 1 hora
+conflict_resolution = "newest"  # newest, oldest, manual
+
+[backup]
+enable_backup = true
+backup_directory = "backups"
+backup_interval = 86400  # 24 horas
+max_backups = 5
+compression = true

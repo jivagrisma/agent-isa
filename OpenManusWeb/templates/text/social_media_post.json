@@ -1,0 +1,35 @@
+{
+  "name": "social_media_post",
+  "description": "Plantilla para generar publicaciones para redes sociales",
+  "prompt": "Escribe una publicación atractiva para {platform} sobre {topic}. La publicación debe ser concisa, llamativa y generar engagement. Incluye hashtags relevantes y una llamada a la acción.",
+  "default_style": "informal",
+  "default_format": "texto_plano",
+  "temperature": 0.8,
+  "variables": [
+    {
+      "name": "platform",
+      "description": "Plataforma de redes sociales",
+      "required": true,
+      "options": ["Twitter", "Instagram", "Facebook", "LinkedIn"]
+    },
+    {
+      "name": "topic",
+      "description": "Tema de la publicación",
+      "required": true
+    },
+    {
+      "name": "tone",
+      "description": "Tono de la publicación",
+      "required": false,
+      "default": "entusiasta",
+      "options": ["entusiasta", "informativo", "humorístico", "inspirador"]
+    },
+    {
+      "name": "include_emoji",
+      "description": "Incluir emojis",
+      "required": false,
+      "default": true
+    }
+  ],
+  "example_output": "¡Descubre cómo la inteligencia artificial está transformando el marketing digital! 🚀\n\nNuestro nuevo artículo revela 5 estrategias que puedes implementar hoy mismo para mejorar tus campañas.\n\nEnlace en bio 👆\n\n#MarketingDigital #InteligenciaArtificial #Estrategias #IA"
+}

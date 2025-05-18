@@ -1,0 +1,62 @@
+# Configuración para entorno de producción
+
+[general]
+environment = "production"
+debug = false
+log_level = "INFO"
+
+[server]
+host = "0.0.0.0"
+port = 8000
+workers = 4
+reload = false
+
+[database]
+type = "sqlite"
+path = "/opt/agent-isa/data/production.db"
+
+[aws]
+region = "us-east-1"
+use_instance_profile = true  # Usar perfil de instancia EC2 en producción
+
+[aws.s3]
+enabled = true
+bucket = "agent-isa-prod"
+prefix = "production"
+
+[aws.bedrock]
+enabled = true
+default_model = "anthropic.claude-3-sonnet-20240229-v1"
+
+[aws.cloudwatch]
+enabled = true
+log_group = "agent-isa"
+log_stream = "application"
+metrics_namespace = "AgentISA"
+
+[storage]
+root_directory = "/opt/agent-isa/data/storage"
+cache_directory = "/opt/agent-isa/data/cache"
+
+[security]
+enable_cors = true
+allowed_origins = ["https://app.example.com"]
+jwt_secret = "${JWT_SECRET}"  # Usar variable de entorno
+jwt_expiry = 86400  # 24 horas
+
+[logging]
+file = "/var/log/agent-isa/application.log"
+max_size = 104857600  # 100 MB
+backup_count = 10
+format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+[monitoring]
+enable_performance_metrics = true
+sample_rate = 1.0  # 100% de las solicitudes
+
+[backup]
+enabled = true
+schedule = "0 2 * * *"  # 2 AM todos los días
+retention_days = 30
+s3_bucket = "agent-isa-backups"
+s3_prefix = "daily"

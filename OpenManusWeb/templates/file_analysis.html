@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Archivo - ISA-Agent</title>
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Highlight.js para resaltado de código -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css" id="code-theme-light">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css" id="code-theme-dark" disabled>
+    
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/enhanced.css">
+    
+    <style>
+        .analysis-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .file-info {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .file-info h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .file-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .file-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        .file-meta-item i {
+            font-size: 1.1rem;
+        }
+        
+        .analysis-content {
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+        }
+        
+        .share-link {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .share-link input {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            margin-right: 0.5rem;
+        }
+        
+        .copy-button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .copy-button:hover {
+            background-color: var(--primary-color-dark);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            color: var(--text-color);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.2s ease;
+        }
+        
+        .back-button:hover {
+            background-color: var(--hover-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="analysis-container">
+        <a href="/enhanced" class="back-button">
+            <i class="ri-arrow-left-line"></i>
+            Volver al chat
+        </a>
+        
+        <div class="file-info">
+            <h2>{{ filename }}</h2>
+            <div class="file-meta">
+                <div class="file-meta-item">
+                    <i class="ri-file-line"></i>
+                    <span>{{ content_type }}</span>
+                </div>
+                <div class="file-meta-item">
+                    <i class="ri-time-line"></i>
+                    <span id="timestamp" data-timestamp="{{ timestamp }}">Fecha de carga</span>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Análisis</h3>
+        <div class="analysis-content markdown-content" id="analysis-content">
+            {{ analysis }}
+        </div>
+        
+        <div class="share-link">
+            <input type="text" id="share-url" value="{{ request.url }}" readonly>
+            <button class="copy-button" id="copy-button">
+                <i class="ri-file-copy-line"></i>
+                Copiar enlace
+            </button>
+        </div>
+    </div>
+    
+    <!-- Scripts para Markdown y resaltado de código -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Formatear fecha
+            const timestampElement = document.getElementById('timestamp');
+            if (timestampElement) {
+                const timestamp = parseInt(timestampElement.getAttribute('data-timestamp'));
+                if (!isNaN(timestamp)) {
+                    const date = new Date(timestamp * 1000);
+                    timestampElement.textContent = date.toLocaleString();
+                }
+            }
+            
+            // Renderizar Markdown
+            const analysisContent = document.getElementById('analysis-content');
+            if (analysisContent) {
+                const content = analysisContent.textContent.trim();
+                analysisContent.innerHTML = marked.parse(content);
+                
+                // Aplicar highlight.js a los bloques de código
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+            
+            // Copiar enlace
+            const copyButton = document.getElementById('copy-button');
+            const shareUrl = document.getElementById('share-url');
+            
+            if (copyButton && shareUrl) {
+                copyButton.addEventListener('click', () => {
+                    shareUrl.select();
+                    document.execCommand('copy');
+                    
+                    // Cambiar texto del botón temporalmente
+                    const originalText = copyButton.innerHTML;
+                    copyButton.innerHTML = '<i class="ri-check-line"></i> Copiado';
+                    
+                    setTimeout(() => {
+                        copyButton.innerHTML = originalText;
+                    }, 2000);
+                });
+            }
+            
+            // Tema
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            // Activar/desactivar hojas de estilo para el resaltado de código
+            document.getElementById('code-theme-light').disabled = (savedTheme === 'dark');
+            document.getElementById('code-theme-dark').disabled = (savedTheme === 'light');
+        });
+    </script>
+</body>
+</html>

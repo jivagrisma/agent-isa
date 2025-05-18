@@ -1,0 +1,27 @@
+[Unit]
+Description=Agent ISA Service
+After=network.target
+
+[Service]
+User=agent-isa
+Group=agent-isa
+WorkingDirectory=/opt/agent-isa/app
+ExecStart=/opt/agent-isa/venv/bin/python /opt/agent-isa/app/OpenManusWeb/app.py
+Restart=on-failure
+RestartSec=5
+Environment=AGENT_ISA_ENV=production
+Environment=PYTHONPATH=/opt/agent-isa/app
+EnvironmentFile=/etc/agent-isa/agent-isa.env
+
+# Límites de recursos
+LimitNOFILE=65536
+TimeoutStartSec=600
+
+# Seguridad
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

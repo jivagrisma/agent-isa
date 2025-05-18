@@ -1,0 +1,28 @@
+# Configuración del módulo de Generación de Imágenes
+
+[general]
+enabled = true
+cache_results = true
+cache_expiry = 3600  # Segundos
+
+[aws]
+region = "us-east-1"
+
+[generation]
+default_model = "amazon.titan-image-generator-v1"
+default_size = "1024x1024"
+default_format = "png"
+quality = "standard"  # standard, premium
+cfg_scale = 8.0
+negative_prompt = "blurry, distorted, low quality, ugly, bad anatomy, bad proportions, deformed"
+
+[storage]
+directory = "images"
+use_s3 = false
+s3_bucket = ""
+s3_prefix = "images"
+
+[editing]
+max_image_size = 4096  # Píxeles (ancho o alto máximo)
+preserve_metadata = true
+default_quality = 90  # Para formatos con compresión

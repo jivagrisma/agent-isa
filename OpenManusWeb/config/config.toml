@@ -4,45 +4,58 @@ api_type = 'bedrock'
 model = "Amazon Nova Pro"
 model_id = "amazon.nova-pro-v1:0"
 region = "us-east-1"
-aws_access_key_id = "x"
-aws_secret_access_key = "x"
+aws_access_key_id = ""  # Se cargará desde variables de entorno
+aws_secret_access_key = ""  # Se cargará desde variables de entorno
 max_tokens = 4096
 temperature = 0.0
 base_url = "https://bedrock-runtime.us-east-1.amazonaws.com"
 api_key = "dummy-key-for-bedrock"
 api_version = ""
 
-# [llm] #AZURE OPENAI:
-# api_type= 'azure'
-# model = "YOUR_MODEL_NAME" #"gpt-4o-mini"
-# base_url = "{YOUR_AZURE_ENDPOINT.rstrip('/')}/openai/deployments/{AZURE_DEPOLYMENT_ID}"
-# api_key = "AZURE API KEY"
-# max_tokens = 8096
-# temperature = 0.0
-# api_version="AZURE API VERSION" #"2024-08-01-preview"
+# Configuración para Claude
+[llm.claude]
+api_type = 'bedrock'
+model = "Claude 3.5 Sonnet"
+model_id = "anthropic.claude-3-5-sonnet-20240620-v1:0"
+region = "us-east-1"
+aws_access_key_id = ""  # Se cargará desde variables de entorno
+aws_secret_access_key = ""  # Se cargará desde variables de entorno
+max_tokens = 4096
+temperature = 0.0
+base_url = "https://bedrock-runtime.us-east-1.amazonaws.com"
+api_key = "dummy-key-for-bedrock"
+api_version = ""
 
-# [llm] #AWS BEDROCK:
-# api_type = 'bedrock'
-# model = "Claude 3.7 Sonnet"
-# model_id = "anthropic.claude-3-7-sonnet-20250219-v1:0"
-# region = "us-east-1"
-# aws_access_key_id = "x"
-# aws_secret_access_key = "x"
-# max_tokens = 4096
-# temperature = 0.0
+# Configuración para Nova Pro
+[llm.nova_pro]
+api_type = 'bedrock'
+model = "Amazon Nova Pro"
+model_id = "amazon.nova-pro-v1:0"
+region = "us-east-1"
+aws_access_key_id = ""  # Se cargará desde variables de entorno
+aws_secret_access_key = ""  # Se cargará desde variables de entorno
+max_tokens = 4096
+temperature = 0.0
+base_url = "https://bedrock-runtime.us-east-1.amazonaws.com"
+api_key = "dummy-key-for-bedrock"
+api_version = ""
 
-# [llm] #AWS BEDROCK (Amazon Nova):
-# api_type = 'bedrock'
-# model = "Amazon Nova Pro"
-# model_id = "amazon.nova-pro-v1:0"
-# region = "us-east-1"
-# aws_access_key_id = "x"
-# aws_secret_access_key = "x"
-# max_tokens = 4096
-# temperature = 0.0
+# Configuración para Nova Lite
+[llm.nova_lite]
+api_type = 'bedrock'
+model = "Amazon Nova Lite"
+model_id = "amazon.nova-lite-v1:0"
+region = "us-east-1"
+aws_access_key_id = ""  # Se cargará desde variables de entorno
+aws_secret_access_key = ""  # Se cargará desde variables de entorno
+max_tokens = 4096
+temperature = 0.0
+base_url = "https://bedrock-runtime.us-east-1.amazonaws.com"
+api_key = "dummy-key-for-bedrock"
+api_version = ""
 
-# Optional configuration for specific LLM models
+# Configuración para modelos de visión
 [llm.vision]
 model = "claude-3-5-sonnet"
 base_url = "https://api.openai.com/v1"
-api_key = "sk-..."
+api_key = ""  # Se cargará desde variables de entorno

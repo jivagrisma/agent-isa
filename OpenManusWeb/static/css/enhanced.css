@@ -1,0 +1,304 @@
+/*
+ * ISA-Agent Enhanced Chat UI Styles
+ * Estilos adicionales para la interfaz mejorada
+ */
+
+/* =============== Estructura Mejorada =============== */
+
+/* Visibilidad de la barra lateral */
+.app-container {
+    position: relative;
+}
+
+.sidebar {
+    position: fixed;
+    left: -280px;
+    height: 100%;
+    transition: left 0.3s ease;
+    z-index: 100;
+}
+
+.app-container.sidebar-visible .sidebar {
+    left: 0;
+}
+
+.app-container.sidebar-visible .main-content {
+    margin-left: var(--sidebar-width);
+}
+
+/* Secciones de la barra lateral */
+.sidebar-section {
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-md);
+}
+
+.sidebar-section:last-child {
+    border-bottom: none;
+}
+
+.sidebar-section-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--secondary-color);
+}
+
+.sidebar-section-content {
+    font-size: 0.85rem;
+}
+
+/* Selector de modelo */
+.model-select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-family: var(--font-family);
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b8cae' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.model-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Control de temperatura */
+.temperature-control {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.temperature-range {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border-color);
+    border-radius: 3px;
+    outline: none;
+}
+
+.temperature-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.temperature-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    border: none;
+}
+
+.temperature-value-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}
+
+/* Lista de módulos */
+.modules-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.module-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.module-item:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.2);
+}
+
+.module-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.module-item i {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Información */
+.sidebar-version {
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+    margin-top: var(--spacing-sm);
+}
+
+/* Botones de acción en el encabezado */
+.header-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1.1rem;
+    transition: background-color 0.2s ease;
+}
+
+.icon-button:hover {
+    background-color: var(--border-color);
+}
+
+/* Botones de modo */
+.mode-buttons {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.mode-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mode-button:hover {
+    background-color: var(--hover-color);
+}
+
+.mode-button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.mode-button i {
+    font-size: 1.1rem;
+}
+
+.mode-button.reasoning i {
+    color: #3b82f6;
+}
+
+.mode-button.search i {
+    color: #10b981;
+}
+
+.mode-button.active i {
+    color: white;
+}
+
+/* Acciones de mensaje */
+.message-actions {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-sm);
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--border-radius-md);
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.action-button:hover {
+    background-color: var(--border-color);
+    color: var(--primary-color);
+}
+
+/* =============== Media Queries =============== */
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .app-container.sidebar-visible .main-content {
+        margin-left: 240px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 280px;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .app-container.sidebar-visible .main-content {
+        margin-left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .icon-button {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .new-chat-btn button span {
+        display: none;
+    }
+
+    .new-chat-btn button {
+        width: 2.2rem;
+        padding: 0;
+        justify-content: center;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .message-actions {
+        gap: var(--spacing-xs);
+    }
+
+    .action-button, .send-button {
+        width: 2rem;
+        height: 2rem;
+    }
+}
